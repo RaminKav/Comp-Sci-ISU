@@ -1,0 +1,12 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Arrow extends JPanel{
+	JPanel arrow = new JPanel();
+	public Arrow(){
+		setBackground(Color.black);
+		setBounds(0,200,30,30);
+		setVisible(true);
+	}
+}
