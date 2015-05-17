@@ -1,0 +1,15 @@
+import java.awt.Color;
+import javax.swing.*;
+
+public class MainGUI extends JFrame {
+public static void main(String[] args){
+		//(X,Y) ---- (LEFT,UP)
+		Window theGUI = new Window();
+		theGUI.setSize(870,720);
+		theGUI.setTitle("Game");
+		theGUI.setBackground(Color.red);
+		theGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//theGUI.pack();
+		theGUI.setVisible(true);
+	}
+}
