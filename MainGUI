@@ -9,7 +9,7 @@ public static void main(String[] args){
 		theGUI.setTitle("Game");
 		theGUI.setBackground(Color.red);
 		theGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//theGUI.pack();
+		
 		theGUI.setVisible(true);
 	}
 }
