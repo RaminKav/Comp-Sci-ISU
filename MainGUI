@@ -10,6 +10,6 @@ public static void main(String[] args){
 		theGUI.setBackground(Color.red);
 		theGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//theGUI.pack();
-		theGUI.setVisible(true);
+		theGUI.setVisible(true);//test
 	}
 }
