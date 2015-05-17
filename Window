@@ -1,0 +1,96 @@
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+
+public class Window extends JFrame{
+double arrow_x, arrow_y; 
+int arrow_width, arrow_height, mouse_x, mouse_y;
+//private Arrow arrow = new Arrow();
+private JButton btnShoot = new JButton("SHOOT");
+private JPanel Ground = new JPanel();
+
+
+
+
+	public Window(){
+		Container container_arrow = getContentPane();
+		arrow_height = 10;
+			arrow_width = 10;
+			arrow_x = 10;
+			arrow_y = 300;
+			//arrow.setSize(arrow_width, arrow_height);
+		
+		container_arrow.setLayout(null);
+			//container_arrow.add(arrow);
+			container_arrow.add(btnShoot);
+			container_arrow.add(Ground);
+		addMouseListener(new MouseAdapter(){
+			@Override
+				public void mousePressed(MouseEvent e) {
+					mouse_x = e.getX();
+					mouse_y = e.getY();
+					ArrowShoot shoot = new ArrowShoot();
+					shoot.ReShoot();
+				}
+		});
+		
+		Ground.setBounds(0, 510, 900, 3);
+			Ground.setBackground(Color.BLACK);
+			Ground.setVisible(true);
+		
+		btnShoot.setBounds(500,531,80,50);
+			btnShoot.addActionListener(new ReShoot());
+		
+		
+	}
+	
+	///////////////
+	public class ReShoot implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e){
+			ArrowShoot shoot = new ArrowShoot();
+			shoot.ReShoot();
+		}
+	}
+	public class ArrowShoot implements ActionListener
+	{
+		public Timer t = new Timer(50, this);
+		Arrow a = new Arrow();
+	
+		//public ArrowShoot(){
+			//t.start();
+		//}
+		public void ReShoot(){
+			t.start();
+			arrow_x=0;
+			arrow_y=200;
+			a.setBounds(0,200,10,10);
+		}
+		
+		public void actionPerformed(ActionEvent e)
+		{//arrow_y = 0.0025 * Math.pow((mouse_x-arrow_x), 2)+ mouse_y;
+			Container container_arrow = getContentPane();
+			container_arrow.setLayout(null);
+			container_arrow.add(a);
+			a.setBounds(0,200,10,10);
+				arrow_x++;
+				
+				double dx = (1.0 / (300.0+ (mouse_x/10.0) ));
+				double dy = arrow_x + mouse_y;
+				//System.out.println(dx +"," +dy + "    " + 1.0/(400.0+400.0));
+				
+				arrow_y = (dx) * (Math.pow(arrow_x, 2)) - ( (1.5) * dy) + 300;
+				int x = (int)Math.round(arrow_x);
+				int y = (int)Math.round(arrow_y);
+				a.setBounds(x, y,10,10);
+			
+			if (arrow_y>=500)
+				t.stop();
+			//if (arrow_x >500)
+				//t.stop();
+		}
+		
+	}
+	
+}
