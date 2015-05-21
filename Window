@@ -10,7 +10,7 @@ int arrow_width, arrow_height, mouse_x, mouse_y;
 //private Arrow arrow = new Arrow();
 private JButton btnShoot = new JButton("SHOOT");
 private JPanel Ground = new JPanel();
-
+boolean Shooting = false;
 
 
 
@@ -29,10 +29,15 @@ private JPanel Ground = new JPanel();
 		addMouseListener(new MouseAdapter(){
 			@Override
 				public void mousePressed(MouseEvent e) {
+				if (Shooting == false)
+				{	
 					mouse_x = e.getX();
 					mouse_y = e.getY();
 					ArrowShoot shoot = new ArrowShoot();
 					shoot.ReShoot();
+					Shooting = true;
+				}
+				
 				}
 		});
 		
@@ -56,7 +61,8 @@ private JPanel Ground = new JPanel();
 	}
 	public class ArrowShoot implements ActionListener
 	{
-		public Timer T = new Timer(5, this);
+		double t = 0.0; 
+		public Timer T = new Timer(10, this);
 		Arrow A = new Arrow();
 	
 		//public ArrowShoot(){
@@ -66,20 +72,8 @@ private JPanel Ground = new JPanel();
 			T.start();
 			arrow_x=0;
 			arrow_y=200;
-			A.setBounds(0,200,10,10);
+			A.setBounds(0,400,10,10);
 		}
-		// MAIN: y=-16t^2 + Vy * t + h
-		//Vy = v * sin(a)
-		//Vx = v * cos(a)
-		//a = arctan( (200-mouse_y)/v
-		//v = Mouse_x - Arrow_x
-		//t = x / Vx
-		//
-		//
-		//
-		//
-		//
-		//
 		
 		
 		public void actionPerformed(ActionEvent e)
@@ -87,29 +81,29 @@ private JPanel Ground = new JPanel();
 			Container container_arrow = getContentPane();
 			container_arrow.setLayout(null);
 			container_arrow.add(A);
-			A.setBounds(0,200,10,10);
+			A.setBounds(0,400,10,10);
 				arrow_x++;
 				
-				double v = mouse_x; //height change
-				double a = Math.atan((mouse_y-200) / (v)); 
-				double Vy = v * Math.sin(a);
-				double Vx = v * Math.cos(a);
-				double t = arrow_x/Vx;
-				double h = 200;
+				double v = 50 + (mouse_x/10); //height change
+				double a = -Math.atan((400-mouse_y) / (v)); 
+				double g = -10;
 				
-				//double dx = (1.0 / (300.0+ (mouse_x/10.0) ));
-				//double dy = arrow_x + mouse_y;
-				//System.out.println(dx +"," +dy + "    " + 1.0/(400.0+400.0));
-				//arrow_y = (dx) * (Math.pow(arrow_x, 2)) - ( (1.5) * dy) + 300;
-				arrow_y = (-16) * Math.pow(t, 2) + (Vy * t) + h;
+				t = t+ 0.1;
+				
+				arrow_x = v*t*Math.cos(a);
+				arrow_y = v*t*Math.sin(a) - (0.5*g*Math.pow(t, 2)) +400;
 				
 				int x = (int)Math.round(arrow_x);
 				int y = (int)Math.round(arrow_y);
 				A.setBounds(x, y,10,10);
-			System.out.println("v: " + v + " a: "+ a + " Vy: "+ Vy + " Vx: "+ Vx + " t: "+ t + " h: "+ h + 
+				
+			System.out.println("v: " + v + " a: "+ a + " t: "+ t + " g: "+ g + 
 								" //x: "+ x + " y: "+ y + " Mx: " + mouse_x + " My: " + mouse_y);
-			if (arrow_y>=500)
+			if (arrow_y>=500){
 				T.stop();
+				A.setVisible(false);
+				Shooting = false;
+			}
 			//if (arrow_x >500)
 				//t.stop();
 		}
