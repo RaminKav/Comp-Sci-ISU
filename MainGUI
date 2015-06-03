@@ -1,15 +1,53 @@
-import java.awt.Color;
-import javax.swing.*;
 
-public class MainGUI extends JFrame {
-public static void main(String[] args){
-		//(X,Y) ---- (LEFT,UP)
-		Window theGUI = new Window();
-		theGUI.setSize(870,720);
-		theGUI.setTitle("Game");
-		theGUI.setBackground(Color.red);
-		theGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+
+public class Main extends JFrame {
+
+		BufferedImage sprite;
 		
-		theGUI.setVisible(true);
+		public Main()
+		{
+			//(X,Y) ---- (LEFT,UP)
+			//Window theGUI = new Window();
+			//JFrame theGUI = new JFrame();
+			setSize(870,720);
+			setTitle("Game");
+			setBackground(Color.red);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setLocationRelativeTo(null);
+			setVisible(true);
+			init();
+		}
+		
+	private void init()
+	{
+		BufferedImageLoader loader = new BufferedImageLoader();
+		BufferedImage spriteSheet = null;
+		
+		try {
+			spriteSheet = loader.loadImage("warrior.png");
+		} catch (IOException ex) {
+			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		SpriteSheet ss = new SpriteSheet(spriteSheet);
+		
+		sprite = ss.grabSprite(0,0,300,300);
+	} 
+	
+	@Override
+	public void paint(Graphics g){
+		g.drawImage(sprite, 300, 500, 500, 500, null);
+		repaint();
+	}
+	
+	public static void main(String[] args){
+		Main main = new Main();
 	}
 }
